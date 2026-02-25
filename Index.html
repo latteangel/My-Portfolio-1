@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Angel Wei</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream: #faf8f4;
+      --warm-white: #f5f2ec;
+      --sage: #8a9e8c;
+      --dusty-rose: #c9a89a;
+      --charcoal: #2e2e2e;
+      --mid: #6b6b6b;
+      --light: #b0aba3;
+      --border: #e4dfd8;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--cream);
+      color: var(--charcoal);
+      overflow-x: hidden;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem 4rem;
+      background: rgba(250,248,244,0.88);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.3rem;
+      font-weight: 400;
+      letter-spacing: 0.05em;
+      color: var(--charcoal);
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      font-size: 0.8rem;
+      font-weight: 400;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--mid);
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--charcoal); }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      padding: 8rem 4rem 4rem;
+      gap: 4rem;
+      position: relative;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0; right: 0;
+      width: 45%;
+      height: 100%;
+      background: var(--warm-white);
+      z-index: 0;
+    }
+
+    .hero-text { position: relative; z-index: 1; }
+
+    .hero-eyebrow {
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--sage);
+      font-weight: 500;
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      animation: fadeUp 0.8s ease forwards 0.2s;
+    }
+
+    .hero-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(3.5rem, 7vw, 6rem);
+      font-weight: 300;
+      line-height: 1.05;
+      color: var(--charcoal);
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      animation: fadeUp 0.8s ease forwards 0.4s;
+    }
+
+    .hero-name em {
+      font-style: italic;
+      color: var(--dusty-rose);
+    }
+
+    .hero-desc {
+      font-size: 1rem;
+      line-height: 1.75;
+      color: var(--mid);
+      max-width: 420px;
+      font-weight: 300;
+      opacity: 0;
+      animation: fadeUp 0.8s ease forwards 0.6s;
+    }
+
+    .hero-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-top: 2.5rem;
+      font-size: 0.8rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--charcoal);
+      text-decoration: none;
+      border-bottom: 1px solid var(--charcoal);
+      padding-bottom: 0.25rem;
+      transition: color 0.2s, border-color 0.2s;
+      opacity: 0;
+      animation: fadeUp 0.8s ease forwards 0.8s;
+    }
+
+    .hero-cta:hover { color: var(--sage); border-color: var(--sage); }
+
+    .hero-visual {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      align-items: flex-start;
+      padding-left: 3rem;
+      opacity: 0;
+      animation: fadeUp 0.8s ease forwards 0.6s;
+    }
+
+    .stat-card {
+      background: white;
+      border: 1px solid var(--border);
+      padding: 1.5rem 2rem;
+      min-width: 220px;
+    }
+
+    .stat-card .stat-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--light);
+      margin-bottom: 0.4rem;
+    }
+
+    .stat-card .stat-value {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.4rem;
+      font-weight: 400;
+      color: var(--charcoal);
+    }
+
+    .stat-card.accent { border-left: 3px solid var(--dusty-rose); }
+    .stat-card.accent2 { border-left: 3px solid var(--sage); margin-left: 2rem; }
+
+    /* SECTIONS */
+    section {
+      padding: 6rem 4rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--sage);
+      font-weight: 500;
+      margin-bottom: 1rem;
+    }
+
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 300;
+      color: var(--charcoal);
+      margin-bottom: 3rem;
+      line-height: 1.2;
+    }
+
+    .divider {
+      height: 1px;
+      background: var(--border);
+      margin: 0 4rem;
+    }
+
+    /* ABOUT */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    .about-text p {
+      font-size: 1rem;
+      line-height: 1.9;
+      color: var(--mid);
+      font-weight: 300;
+      margin-bottom: 1.2rem;
+    }
+
+    .about-text p strong {
+      color: var(--charcoal);
+      font-weight: 500;
+    }
+
+    .quote-block {
+      border-left: 2px solid var(--dusty-rose);
+      padding: 1.5rem 2rem;
+      background: var(--warm-white);
+    }
+
+    .quote-block p {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.4rem;
+      font-style: italic;
+      font-weight: 300;
+      color: var(--charcoal);
+      line-height: 1.6;
+    }
+
+    /* EDUCATION */
+    .education-block {
+      border: 1px solid var(--border);
+      padding: 2.5rem 3rem;
+      background: white;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .education-block::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 4px;
+      height: 100%;
+      background: linear-gradient(to bottom, var(--sage), var(--dusty-rose));
+    }
+
+    .edu-school {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.8rem;
+      font-weight: 400;
+      color: var(--charcoal);
+      margin-bottom: 0.3rem;
+    }
+
+    .edu-meta {
+      display: flex;
+      gap: 2rem;
+      margin-top: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .edu-pill {
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.4rem 1rem;
+      border: 1px solid var(--border);
+      color: var(--mid);
+      background: var(--cream);
+    }
+
+    .edu-pill.highlight {
+      background: var(--sage);
+      color: white;
+      border-color: var(--sage);
+    }
+
+    /* EXPERIENCE */
+    .experience-item {
+      display: grid;
+      grid-template-columns: 180px 1fr;
+      gap: 3rem;
+      padding: 2.5rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .experience-item:first-of-type { border-top: 1px solid var(--border); }
+
+    .exp-date {
+      font-size: 0.78rem;
+      color: var(--light);
+      letter-spacing: 0.08em;
+      padding-top: 0.2rem;
+    }
+
+    .exp-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.4rem;
+      font-weight: 400;
+      color: var(--charcoal);
+      margin-bottom: 0.3rem;
+    }
+
+    .exp-company {
+      font-size: 0.8rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--dusty-rose);
+      margin-bottom: 0.8rem;
+    }
+
+    .exp-desc {
+      font-size: 0.95rem;
+      line-height: 1.75;
+      color: var(--mid);
+      font-weight: 300;
+    }
+
+    /* ACTIVITIES */
+    .activities-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .activity-card {
+      padding: 2rem;
+      background: var(--warm-white);
+      border: 1px solid var(--border);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .activity-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.06);
+    }
+
+    .activity-icon {
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
+    }
+
+    .activity-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.3rem;
+      font-weight: 400;
+      color: var(--charcoal);
+      margin-bottom: 0.4rem;
+    }
+
+    .activity-desc {
+      font-size: 0.85rem;
+      color: var(--mid);
+      line-height: 1.6;
+      font-weight: 300;
+    }
+
+    /* FOOTER */
+    footer {
+      background: var(--charcoal);
+      color: white;
+      padding: 3rem 4rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.4rem;
+      font-weight: 300;
+      letter-spacing: 0.05em;
+    }
+
+    .footer-note {
+      font-size: 0.78rem;
+      color: rgba(255,255,255,0.45);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    /* ANIMATIONS */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .fade-in {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 768px) {
+      nav { padding: 1.2rem 1.5rem; }
+      .nav-links { display: none; }
+      .hero { grid-template-columns: 1fr; padding: 7rem 1.5rem 3rem; }
+      .hero::before { display: none; }
+      .hero-visual { padding-left: 0; }
+      section { padding: 4rem 1.5rem; }
+      .divider { margin: 0 1.5rem; }
+      .about-grid { grid-template-columns: 1fr; }
+      .experience-item { grid-template-columns: 1fr; gap: 0.5rem; }
+      footer { flex-direction: column; gap: 1rem; text-align: center; padding: 2rem 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="#" class="nav-logo">Angel Wei</a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#education">Education</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#activities">Activities</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" style="max-width:100%; padding-top:8rem;">
+    <div class="hero-text">
+      <p class="hero-eyebrow">Nursing Student · Future Midwife</p>
+      <h1 class="hero-name">Angel <em>Wei</em></h1>
+      <p class="hero-desc">A dedicated nursing student at William Paterson University, driven by a passion for maternal care and the belief that every birth deserves compassionate, expert support.</p>
+      <a href="#about" class="hero-cta">Discover my story →</a>
+    </div>
+    <div class="hero-visual">
+      <div class="stat-card accent">
+        <div class="stat-label">University</div>
+        <div class="stat-value">William Paterson</div>
+      </div>
+      <div class="stat-card accent2">
+        <div class="stat-label">Academic Standing</div>
+        <div class="stat-value">Dean's List</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Dream Career</div>
+        <div class="stat-value">Midwife MSN</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <p class="section-label fade-in">About Me</p>
+    <h2 class="section-title fade-in">Caring for others is not just a career — it's a calling.</h2>
+    <div class="about-grid">
+      <div class="about-text fade-in">
+        <p>Hi, I'm <strong>Angel Wei</strong> — a nursing student at William Paterson University, Class of 2029. I came into nursing with a clear sense of purpose: to support mothers and families during one of the most profound experiences of their lives.</p>
+        <p>My long-term goal is to become a <strong>Certified Nurse Midwife (MSN)</strong>, where I can combine clinical expertise with genuine human connection to provide holistic, empowering maternal care.</p>
+        <p>Outside of academics, I stay grounded through cultural community, meaningful work, and a commitment to showing up fully — in the classroom, at the table, and everywhere in between.</p>
+      </div>
+      <div class="quote-block fade-in">
+        <p>"The first cry of a newborn is the sound of potential. I want to be there for that moment — and for every step that leads to it."</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- EDUCATION -->
+  <section id="education">
+    <p class="section-label fade-in">Education</p>
+    <h2 class="section-title fade-in">Building a foundation for exceptional care.</h2>
+    <div class="education-block fade-in">
+      <div class="edu-school">William Paterson University</div>
+      <div style="color:var(--mid); font-size:0.9rem; margin-top:0.3rem;">Nursing (BSN) · Wayne, New Jersey</div>
+      <div class="edu-meta">
+        <span class="edu-pill">Class of 2029</span>
+        <span class="edu-pill highlight">🏅 Dean's List</span>
+        <span class="edu-pill">Pre-MSN Track</span>
+        <span class="edu-pill">Future: Midwife MSN</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- EXPERIENCE -->
+  <section id="experience">
+    <p class="section-label fade-in">Experience</p>
+    <h2 class="section-title fade-in">Work that sharpens patience, presence & people skills.</h2>
+
+    <div class="experience-item fade-in">
+      <div class="exp-date">Current</div>
+      <div>
+        <div class="exp-title">Server</div>
+        <div class="exp-company">Small Business Restaurant · Garden State Plaza</div>
+        <div class="exp-desc">Delivering attentive, personalized service in a fast-paced dining environment. Developed strong interpersonal skills, the ability to stay calm under pressure, and a genuine care for the comfort of others — qualities that translate directly into patient-centered nursing care.</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ACTIVITIES -->
+  <section id="activities">
+    <p class="section-label fade-in">Activities & Clubs</p>
+    <h2 class="section-title fade-in">Community, culture, and connection.</h2>
+    <div class="activities-grid">
+      <div class="activity-card fade-in">
+        <div class="activity-icon">🇰🇷</div>
+        <div class="activity-name">Korea Club</div>
+        <div class="activity-desc">Celebrating Korean culture, building cross-cultural friendships, and fostering community on campus through events, food, language, and shared experiences.</div>
+      </div>
+      <div class="activity-card fade-in">
+        <div class="activity-icon">✨</div>
+        <div class="activity-name">FACE</div>
+        <div class="activity-desc">An active member of FACE at WPU — engaging with a community that uplifts and empowers members through shared values, identity, and campus involvement.</div>
+      </div>
+      <div class="activity-card fade-in">
+        <div class="activity-icon">📚</div>
+        <div class="activity-name">Dean's List Scholar</div>
+        <div class="activity-desc">Recognized for academic excellence at William Paterson University — a reflection of dedication to the rigorous nursing curriculum and a commitment to lifelong learning.</div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-name">Angel Wei</div>
+    <div class="footer-note">Nursing · Class of 2029 · William Paterson University</div>
+  </footer>
+
+  <script>
+    // Intersection Observer for fade-in
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((e, i) => {
+        if (e.isIntersecting) {
+          setTimeout(() => e.target.classList.add('visible'), i * 100);
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+  </script>
+
+</body>
+</html>
